@@ -1,0 +1,126 @@
+/* Dashboard Container Styling */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f4f7fc; /* Light background for the page */
+  min-height: 100vh;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Navbar Styling */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+  background-color: #007bff;
+  color: white;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.logout-button {
+  background-color: white;
+  color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #0056b3;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Card Container for Employee Cards */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 30px;
+  width: 100%;
+  max-width: 1300px;
+}
+
+/* Styling for Each Employee Card */
+.employee-card {
+  width: 300px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.employee-card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling the Employee Photo in the Card */
+.employee-photo {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 3px solid #ddd;
+}
+
+/* Styling Employee Details in the Card */
+.employee-details {
+  padding: 20px;
+  text-align: left;
+  background-color: #ffffff;
+}
+
+.employee-details h2 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  color: #333;
+  font-weight: 600;
+}
+
+.employee-details p {
+  margin: 6px 0;
+  color: #666;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.employee-details .title {
+  font-weight: 500;
+  color: #007bff;
+}
+
+.employee-details .department {
+  color: #777;
+  font-size: 14px;
+}
+
+.employee-details .email {
+  color: #007bff;
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.employee-details .email:hover {
+  color: #0056b3;
+}
