@@ -1,95 +1,3 @@
-
-
-// import React, { useEffect, useState } from "react";
-// import axiosInstance from "../api/axiosInstance";
-// import "../styles/employeeTable.css";
-// import SalaryModal from "./salaryModal";
-
-// function EmployeeTable() {
-//   const [employees, setEmployees] = useState([]);
-//   const [selectedEmployee, setSelectedEmployee] = useState(null);
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-
-//   useEffect(() => {
-//     const fetchEmployees = async () => {
-//       try {
-//         const response = await axiosInstance.get("/account/amount", {requiresAuth:true});
-//         setEmployees(response.data.data);
-//       } catch (error) {
-//         console.error("Error fetching employees:", error);
-//       }
-//     };
-
-//     fetchEmployees();
-//   }, []);
-
-//   const handleViewSalary = (employee) => {
-//     console.log(employee)
-//     setSelectedEmployee(employee);
-//     setIsModalOpen(true);
-//   };
-
-  // const closeModal = () => {
-  //   setIsModalOpen(false);
-  //   setSelectedEmployee(null);
-  // };
-
-//   return (
-//     <div style={{ margin: "20px" }}>
-//       <h2>Employee Information</h2>
-//       <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
-//         <thead>
-//           <tr>
-//             <th>Employee ID</th>
-//             <th>First Name</th>
-//             <th>Last Name</th>
-//             <th>Email</th>
-//             <th>Title</th>
-//             <th>Photograph</th>
-//             <th>Department</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {employees.map((employee) => (
-//             <tr key={employee.employee_id}>
-//               <td>{employee.employee_id}</td>
-//               <td>{employee.first_name}</td>
-//               <td>{employee.last_name}</td>
-//               <td>{employee.email}</td>
-//               <td>{employee.title || "N/A"}</td>
-//               <td>
-//                 {employee.photograph_path ? (
-//                   <img
-//                     src={employee.photograph_path}
-//                     alt={`${employee.first_name}`}
-//                     style={{ width: "50px", height: "50px", borderRadius: "5px" }}
-//                   />
-//                 ) : (
-//                   "No Image"
-//                 )}
-//               </td>
-//               <td>{employee.department?.name || "N/A"}</td>
-//               <td>
-//                 <button onClick={() => handleViewSalary(employee)}>View Salary</button>
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//       {isModalOpen && (
-//         <SalaryModal
-//           employee={selectedEmployee}
-//           closeModal={closeModal}
-//         />
-//       )}
-//     </div>
-//   );
-// }
-
-// export default EmployeeTable;
-
-
-
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../api/axiosInstance";
 import "../styles/employeeTable.css";
@@ -101,10 +9,8 @@ function EmployeeTable() {
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
-
-
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
@@ -128,7 +34,7 @@ function EmployeeTable() {
     setIsModalOpen(false);
     setSelectedEmployee(null);
   };
-  
+
   const handleSelectAll = () => {
     setSelectedEmployees(employees);
   };
@@ -237,75 +143,31 @@ function EmployeeTable() {
               ))}
             </tbody>
           </table>
-          <div style={{ marginTop: "10px" }}>
-            <label>
-              Amount:
-              <input
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                style={{ marginLeft: "10px", marginRight: "10px" }}
-              />
-            </label>
-            <label>
-              Description:
-              <input
-                type="text"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                style={{ marginLeft: "10px" }}
-              />
-            </label>
-            <button onClick={handleSendAmount} style={{ marginLeft: "10px" }}>
+          <div className="inline-container">
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              className="input-inline amount-input"
+              placeholder="Amount"
+            />
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="input-inline description-input"
+              placeholder="Description"
+            ></textarea>
+            <button onClick={handleSendAmount} className="send-amount-btn">
               Send Amount
             </button>
           </div>
+
         </>
       )}
 
 
 
 <div style={{ margin: "20px" }}>
-       <h2>Employee Information</h2>
-       <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
-         <thead>
-           <tr>
-             <th>Employee ID</th>
-             <th>First Name</th>
-             <th>Last Name</th>
-             <th>Email</th>
-             <th>Title</th>
-             <th>Photograph</th>
-             <th>Department</th>
-           </tr>
-         </thead>
-         <tbody>
-           {employees.map((employee) => (
-             <tr key={employee.employee_id}>
-               <td>{employee.employee_id}</td>
-               <td>{employee.first_name}</td>
-               <td>{employee.last_name}</td>
-               <td>{employee.email}</td>
-               <td>{employee.title || "N/A"}</td>
-               <td>
-                 {employee.photograph_path ? (
-                   <img
-                     src={employee.photograph_path}
-                     alt={`${employee.first_name}`}
-                     style={{ width: "50px", height: "50px", borderRadius: "5px" }}
-                   />
-                 ) : (
-                   "No Image"
-                 )}
-               </td>
-               <td>{employee.department?.name || "N/A"}</td>
-               <td>
-                 <button onClick={() => handleViewSalary(employee)}>View Salary</button>
-               </td>
-             </tr>
-           ))}
-         </tbody>
-       </table>
        {isModalOpen && (
          <SalaryModal
            employee={selectedEmployee}

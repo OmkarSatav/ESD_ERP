@@ -1,3 +1,27 @@
+/* Page Background */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fvedmarg.com%2Fknow-everything-about-erp-full-form-meaning-use-benefits%2F&psig=AOvVaw1CFk_P_yJwigNiEE1Nke98&ust=1732696396774000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLCfqpzL-YkDFQAAAAAdAAAAABAE'); /* Replace with your image URL */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Keeps the image fixed while scrolling */
+}
+
+/* Overlay Effect */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Dark overlay to enhance contrast */
+    z-index: -1; /* Places it behind the content */
+}
+
 /* Login Page Container */
 .login-container {
     max-width: 450px;
@@ -6,7 +30,7 @@
     text-align: center;
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Light gradient */
+    background: rgba(255, 255, 255, 0.85); /* Semi-transparent background for contrast */
     transition: background 0.3s ease-in-out;
 }
 
