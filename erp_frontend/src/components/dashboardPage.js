@@ -25,7 +25,7 @@ const DashboardPage = () => {
     return (
         <div className="dashboard-container">
             <Navbar onLogout={handleLogout} />
-            <EmployeeTable />
+            <EmployeeTable token={localStorage.getItem('token')} />
         </div>
     );
 };

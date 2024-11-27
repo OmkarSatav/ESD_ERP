@@ -4,9 +4,12 @@ import com.academic.erp_backend.dto.ApiUtils;
 import com.academic.erp_backend.dto.LoginRequestObj;
 import com.academic.erp_backend.dto.LoginResponseObj;
 import com.academic.erp_backend.dto.RequestPasswordObj;
+import com.academic.erp_backend.entity.EmployeeSalary;
 import com.academic.erp_backend.entity.Employees;
+import com.academic.erp_backend.service.AccountService;
 import com.academic.erp_backend.service.EmployeeService;
 import com.academic.erp_backend.service.JWTService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -93,5 +96,9 @@ public class EmployeeController {
             System.out.println("Employees logged in");
         }
     }
+
+
+
+
 
 }

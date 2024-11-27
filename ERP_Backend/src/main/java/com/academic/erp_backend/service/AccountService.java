@@ -4,6 +4,7 @@ import com.academic.erp_backend.dto.AccountResponse;
 import com.academic.erp_backend.entity.Employees;
 import com.academic.erp_backend.entity.EmployeeSalary;
 import com.academic.erp_backend.repo.AccountRepo;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +27,15 @@ public class AccountService {
 
     public List<AccountResponse> getAllEmployeeDetails() {
         return accountRepo.findAllEmployeeDetails();
+    }
+
+    public void saveSalary(@Valid EmployeeSalary employeeSalary) {
+        accountRepo.updateSalaryOfEmployee(
+                employeeSalary.getAmount(),
+                employeeSalary.getDescription(),
+                employeeSalary.getPayment_date(),
+                employeeSalary.getEmployee_id()
+        );
     }
 
     public String updateAmount(List<EmployeeSalary> employeeSalary, Employees currEmployee) {

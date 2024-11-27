@@ -121,4 +121,34 @@ public class AccountController {
         }
     }
 
+
+    @PostMapping("/set-salary")
+    public ResponseEntity<ApiUtils<Void>> setSalary(@RequestBody @Valid EmployeeSalary employeeSalary) {
+        try {
+            // Save the salary using the service layer
+            accountService.saveSalary(employeeSalary);
+
+            // Build the success response
+            ApiUtils<Void> response = ApiUtils.<Void>builder()
+                    .success(true)
+                    .message("Salary saved successfully")
+                    .data(null)
+                    .statusCode(HttpStatus.OK.value())
+                    .build();
+
+            return ResponseEntity.ok(response);
+        } catch (Exception ex) {
+            // Handle exceptions and build the error response
+            ApiUtils<Void> errorResponse = ApiUtils.<Void>builder()
+                    .success(false)
+                    .message("Failed to save salary")
+                    .errors(ex.getMessage())
+                    .data(null)
+                    .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                    .build();
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
 }

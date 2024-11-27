@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";  // Import useNavigate hook
 import axiosInstance from "../api/axiosInstance";
 import "../styles/employeeTable.css";
 import SalaryModal from "./salaryModal";
 
-function EmployeeTable() {
+function EmployeeTable({token}) {
+  const navigate = useNavigate();  // Initialize useNavigate hook
   const [employees, setEmployees] = useState([]);
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [amount, setAmount] = useState("");
@@ -13,7 +15,7 @@ function EmployeeTable() {
   const [isAccountingDepartment, setIsAccountingDepartment] = useState(false);
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
-
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,10 +39,16 @@ function EmployeeTable() {
     fetchData();
   }, []);
 
+  const handleSetSalary = (employee) => {
+    // Instead of opening a modal, navigate to the 'set-salary' route
+    navigate(`/dashboard/set-salary`, { state: { employee, token } });  // Pass employee data via state
+  };
+
   const handleViewSalary = (employee) => {
     setSelectedEmployee(employee);
     setIsModalOpen(true);
   };
+
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -124,7 +132,7 @@ function EmployeeTable() {
         </thead>
         <tbody>
           {filteredEmployees.map((employee) => (
-            <tr key={employee.employee_id}>
+            <tr key={employee.employee_id} >
               {isAccountingDepartment && (
                 <td>
                   <input
@@ -142,7 +150,7 @@ function EmployeeTable() {
                   />
                 </td>
               )}
-              <td>{employee.employee_id}</td>
+              <td onClick={() => handleSetSalary(employee)}>{employee.employee_id}</td>
               <td>{employee.first_name}</td>
               <td>{employee.last_name}</td>
               <td>{employee.email}</td>
@@ -160,7 +168,7 @@ function EmployeeTable() {
               </td>
               <td>{employee.department?.name || "Unknown"}</td>
               <td>
-                <button onClick={() => handleViewSalary(employee)}>View Salary</button>
+              <button style={{ zIndex: 2 }} onClick={() => handleViewSalary(employee)}>View Salary</button>
               </td>
             </tr>
           ))}
@@ -211,7 +219,7 @@ function EmployeeTable() {
         </>
       )}
 
-      {isModalOpen && (
+{isModalOpen && (
         <SalaryModal employee={selectedEmployee} closeModal={closeModal} />
       )}
     </div>
