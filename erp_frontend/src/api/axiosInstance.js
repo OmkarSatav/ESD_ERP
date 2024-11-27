@@ -8,22 +8,13 @@ const axiosInstance = axios.create({
     },
 });
 
-// // Add a request interceptor to include the token in headers
-// axiosInstance.interceptors.request.use((config) => {
-//     const token = localStorage.getItem("token");
-//     if (token) {
-//         config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-// });
 
 axiosInstance.interceptors.request.use(
     (config) => {
-      // Check if the endpoint requires authentication
       if (config.requiresAuth) {
-        const token = localStorage.getItem("token"); // Get the token from localStorage
+        const token = localStorage.getItem("token"); 
         if (token) {
-          config.headers["Authorization"] = `Bearer ${token}`; // Add token to Authorization header
+          config.headers["Authorization"] = `Bearer ${token}`;
         } else {
           console.warn("No token found for authenticated request.");
         }
@@ -31,9 +22,12 @@ axiosInstance.interceptors.request.use(
       return config;
     },
     (error) => {
+      if (error.response && error.response.status === 401) {
+        window.location.href = "/";
+      }
       return Promise.reject(error);
     }
-  );
+);
 
 export default axiosInstance;
 

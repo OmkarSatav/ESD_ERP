@@ -1,21 +1,16 @@
 package com.academic.erp_backend.dto;
 
+import lombok.Getter;
+
+@Getter
 public class LoginResponseObj {
 
     private String token;
     private Long expiry_time;
 
-    public String getToken() {
-        return token;
-    }
-
     public LoginResponseObj setToken(String token) {
         this.token = token;
         return this;
-    }
-
-    public Long getExpiry_time() {
-        return expiry_time;
     }
 
     public LoginResponseObj setExpiry_time(Long expiry_time) {

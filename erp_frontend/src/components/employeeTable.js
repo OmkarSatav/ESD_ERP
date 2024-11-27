@@ -11,16 +11,24 @@ function EmployeeTable() {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAccountingDepartment, setIsAccountingDepartment] = useState(false);
-  
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axiosInstance.get("/account/amount", { requiresAuth: true });
-        setEmployees(response.data.data);
-        
-        // If we get more than one employee in the response, 
-        // it means the user is from accounting department (department_id = 2)
-        setIsAccountingDepartment(response.data.data.length > 1);
+        const fetchedEmployees = response.data.data;
+        setEmployees(fetchedEmployees);
+
+        // Extract unique departments
+        const uniqueDepartments = [
+          ...new Set(fetchedEmployees.map((emp) => emp.department?.name || "Unknown")),
+        ];
+        setDepartments(uniqueDepartments);
+
+        setIsAccountingDepartment(fetchedEmployees.length > 1);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -40,7 +48,7 @@ function EmployeeTable() {
   };
 
   const handleSelectAll = () => {
-    setSelectedEmployees(employees);
+    setSelectedEmployees(filteredEmployees);
   };
 
   const handleDeselectAll = () => {
@@ -63,15 +71,43 @@ function EmployeeTable() {
     }
   };
 
+  // Filter employees based on the selected department
+  const filteredEmployees = selectedDepartment
+    ? employees.filter((emp) => emp.department?.name === selectedDepartment)
+    : employees;
+
   return (
     <div style={{ margin: "20px" }}>
       <h2>Employee Information</h2>
       {isAccountingDepartment && (
         <div>
-          <button onClick={handleSelectAll} style={{ marginRight: "10px" }}>Select All</button>
+          <button onClick={handleSelectAll} style={{ marginRight: "10px" }}>
+            Select All
+          </button>
           <button onClick={handleDeselectAll}>Deselect All</button>
         </div>
       )}
+      <div style={{ marginTop: "10px" }}>
+        {/* Department Filter */}
+        <label>
+          Filter by Department:
+          <select
+            value={selectedDepartment}
+            onChange={(e) => {
+              setSelectedDepartment(e.target.value);
+              handleDeselectAll();
+            }}
+            style={{ marginLeft: "10px" }}
+          >
+            <option value="">All Departments</option>
+            {departments.map((dept) => (
+              <option key={dept} value={dept}>
+                {dept}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
       <table border="1" style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px" }}>
         <thead>
           <tr>
@@ -87,7 +123,7 @@ function EmployeeTable() {
           </tr>
         </thead>
         <tbody>
-          {employees.map((employee) => (
+          {filteredEmployees.map((employee) => (
             <tr key={employee.employee_id}>
               {isAccountingDepartment && (
                 <td>
@@ -122,7 +158,7 @@ function EmployeeTable() {
                   "No Image"
                 )}
               </td>
-              <td>{employee.department?.name || "N/A"}</td>
+              <td>{employee.department?.name || "Unknown"}</td>
               <td>
                 <button onClick={() => handleViewSalary(employee)}>View Salary</button>
               </td>
@@ -175,14 +211,9 @@ function EmployeeTable() {
         </>
       )}
 
-      <div style={{ margin: "20px" }}>
-        {isModalOpen && (
-          <SalaryModal
-            employee={selectedEmployee}
-            closeModal={closeModal}
-          />
-        )}
-      </div>
+      {isModalOpen && (
+        <SalaryModal employee={selectedEmployee} closeModal={closeModal} />
+      )}
     </div>
   );
 }

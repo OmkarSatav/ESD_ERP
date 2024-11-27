@@ -17,7 +17,7 @@ public interface EmployeeRepo extends JpaRepository<Employees, Integer> {
 
     @Transactional
     @Modifying
-    @Query("Update Employees e set e.password = ?1 where e.employee_id between 1 and 16")
+    @Query("Update Employees e set e.password = ?1 where e.employee_id between 1 and 12")
     void updatePassword(@Param("password") String password);
 
     Optional<Employees> findByEmail(String email);

@@ -2,11 +2,14 @@ package com.academic.erp_backend.dto;
 
 import com.academic.erp_backend.entity.Departments;
 import com.academic.erp_backend.entity.EmployeeSalary;
-import lombok.Builder;
-import lombok.Data;
+import jakarta.persistence.NamedEntityGraph;
+import lombok.*;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
 public class AccountResponse {
     private int employee_id;
     private String first_name;
@@ -18,48 +21,6 @@ public class AccountResponse {
     private EmployeeSalary employeeSalary;
 
     public AccountResponse(EmployeeSalary employeeSalary) {
-        this.employeeSalary = employeeSalary;
-    }
-
-    public AccountResponse() {
-    }
-
-    public void setEmployee_id(int employee_id) {
-        this.employee_id = employee_id;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setPhotograph_path(String photograph_path) {
-        this.photograph_path = photograph_path;
-    }
-
-    public void setDepartment(Departments department) {
-        this.department = department;
-    }
-
-    public AccountResponse(int employee_id, String first_name, String last_name, String email, String title, String photograph_path, Departments department, EmployeeSalary employeeSalary) {
-        this.employee_id = employee_id;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.email = email;
-        this.title = title;
-        this.photograph_path = photograph_path;
-        this.department = department;
         this.employeeSalary = employeeSalary;
     }
 
