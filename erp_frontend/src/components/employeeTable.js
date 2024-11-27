@@ -10,22 +10,26 @@ function EmployeeTable() {
   const [description, setDescription] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAccountingDepartment, setIsAccountingDepartment] = useState(false);
   
   useEffect(() => {
-    const fetchEmployees = async () => {
+    const fetchData = async () => {
       try {
         const response = await axiosInstance.get("/account/amount", { requiresAuth: true });
         setEmployees(response.data.data);
+        
+        // If we get more than one employee in the response, 
+        // it means the user is from accounting department (department_id = 2)
+        setIsAccountingDepartment(response.data.data.length > 1);
       } catch (error) {
-        console.error("Error fetching employees:", error);
+        console.error("Error fetching data:", error);
       }
     };
 
-    fetchEmployees();
+    fetchData();
   }, []);
 
   const handleViewSalary = (employee) => {
-    console.log(employee)
     setSelectedEmployee(employee);
     setIsModalOpen(true);
   };
@@ -62,12 +66,16 @@ function EmployeeTable() {
   return (
     <div style={{ margin: "20px" }}>
       <h2>Employee Information</h2>
-      <button onClick={handleSelectAll} style={{ marginRight: "10px" }}>Select All</button>
-      <button onClick={handleDeselectAll}>Deselect All</button>
+      {isAccountingDepartment && (
+        <div>
+          <button onClick={handleSelectAll} style={{ marginRight: "10px" }}>Select All</button>
+          <button onClick={handleDeselectAll}>Deselect All</button>
+        </div>
+      )}
       <table border="1" style={{ width: "100%", borderCollapse: "collapse", marginTop: "10px" }}>
         <thead>
           <tr>
-            <th>Select</th>
+            {isAccountingDepartment && <th>Select</th>}
             <th>Employee ID</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -75,26 +83,29 @@ function EmployeeTable() {
             <th>Title</th>
             <th>Photograph</th>
             <th>Department</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {employees.map((employee) => (
             <tr key={employee.employee_id}>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedEmployees.some((e) => e.employee_id === employee.employee_id)}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setSelectedEmployees((prev) => [...prev, employee]);
-                    } else {
-                      setSelectedEmployees((prev) =>
-                        prev.filter((selected) => selected.employee_id !== employee.employee_id)
-                      );
-                    }
-                  }}
-                />
-              </td>
+              {isAccountingDepartment && (
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectedEmployees.some((e) => e.employee_id === employee.employee_id)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedEmployees((prev) => [...prev, employee]);
+                      } else {
+                        setSelectedEmployees((prev) =>
+                          prev.filter((selected) => selected.employee_id !== employee.employee_id)
+                        );
+                      }
+                    }}
+                  />
+                </td>
+              )}
               <td>{employee.employee_id}</td>
               <td>{employee.first_name}</td>
               <td>{employee.last_name}</td>
@@ -113,14 +124,14 @@ function EmployeeTable() {
               </td>
               <td>{employee.department?.name || "N/A"}</td>
               <td>
-                 <button onClick={() => handleViewSalary(employee)}>View Salary</button>
-               </td>
+                <button onClick={() => handleViewSalary(employee)}>View Salary</button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {selectedEmployees.length > 0 && (
+      {isAccountingDepartment && selectedEmployees.length > 0 && (
         <>
           <h3>Selected Employees</h3>
           <table border="1" style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -161,23 +172,18 @@ function EmployeeTable() {
               Send Amount
             </button>
           </div>
-
         </>
       )}
 
-
-
-<div style={{ margin: "20px" }}>
-       {isModalOpen && (
-         <SalaryModal
-           employee={selectedEmployee}
-           closeModal={closeModal}
-         />
-       )}
-     </div>
+      <div style={{ margin: "20px" }}>
+        {isModalOpen && (
+          <SalaryModal
+            employee={selectedEmployee}
+            closeModal={closeModal}
+          />
+        )}
+      </div>
     </div>
-
-    
   );
 }
 

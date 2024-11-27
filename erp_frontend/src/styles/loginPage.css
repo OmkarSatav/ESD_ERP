@@ -2,42 +2,62 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background-image: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fvedmarg.com%2Fknow-everything-about-erp-full-form-meaning-use-benefits%2F&psig=AOvVaw1CFk_P_yJwigNiEE1Nke98&ust=1732696396774000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLCfqpzL-YkDFQAAAAAdAAAAABAE'); /* Replace with your image URL */
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    /*background: linear-gradient(to right, #00c6ff, #0072ff); /* Gradient background */
+    background-size: cover;
+    background-attachment: fixed;
+    color: white; /* Text color set to white for better contrast */
+    height: 100vh; /* Ensure the background covers the whole page */
+    display: flex; /* Use flexbox to align content */
+    justify-content: center;
+    align-items: center;
+}
+
+#root{
+    height: 90vh;
+    width: 100%;
+}
+/* Container for Image and Form */
+.container {
+    display: flex;
+    width: 80%;
+    height: 100%;
+    border-radius: 10px;
+    margin: auto;
+}
+
+/* Left Side (Image) */
+.left-side {
+    flex: 1;
+    background-image: url("../Assets/loginBg.png"); /* Path to your image */
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed; /* Keeps the image fixed while scrolling */
+    border-radius: 10px 0 0 10px; /* Rounded corners on the left */
 }
 
-/* Overlay Effect */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* Dark overlay to enhance contrast */
-    z-index: -1; /* Places it behind the content */
-}
-
-/* Login Page Container */
+/* Right Side (Login Form) */
 .login-container {
-    max-width: 450px;
-    margin: 80px auto;
+    flex: 1;
+    max-width: 30%;
+    margin: 0 auto;
+    margin-left: 5%;
     padding: 40px;
     text-align: center;
     border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    background: rgba(255, 255, 255, 0.85); /* Semi-transparent background for contrast */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent background for contrast */
+    backdrop-filter: blur(10px); /* Adds a blur effect on the background */
     transition: background 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* Login Page Header */
 .login-container h2 {
-    font-size: 28px;
-    font-weight: 600;
+    font-size: 30px;
+    font-weight: 700;
     margin-bottom: 30px;
     color: #333;
 }
@@ -50,7 +70,7 @@ body::before {
 
 .form-group label {
     font-size: 16px;
-    color: #555;
+    color: #333;
     margin-bottom: 8px;
     display: block;
 }
@@ -58,10 +78,10 @@ body::before {
 /* Input Fields */
 .form-group input {
     width: 100%;
-    padding: 12px 16px;
+    padding: 14px 18px;
     font-size: 16px;
     color: #333;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #f9f9f9;
     transition: border-color 0.3s ease, background-color 0.3s ease;
@@ -70,7 +90,7 @@ body::before {
 
 /* Input Focus Effect */
 .form-group input:focus {
-    border-color: #007bff;
+    border-color: #0072ff;
     background-color: #fff;
     outline: none;
 }
@@ -86,21 +106,23 @@ body::before {
 
 /* Submit Button */
 button {
-    padding: 12px 24px;
-    background-color: #007bff;
+    padding: 14px 24px;
+    background-color: #0072ff;
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
     width: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Button Hover Effect */
 button:hover {
     background-color: #0056b3;
     transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
 }
 
 /* Button Active Effect */
@@ -110,16 +132,16 @@ button:active {
 
 /* Mobile Responsiveness */
 @media (max-width: 480px) {
+    .container {
+        flex-direction: column; /* Stack the image and form vertically on small screens */
+        height: auto;
+    }
+    .left-side {
+        height: 200px; /* Adjust height for small screens */
+        border-radius: 10px 10px 0 0;
+    }
     .login-container {
-        padding: 20px;
         max-width: 90%;
-    }
-
-    .form-group input {
-        padding: 10px 14px;
-    }
-
-    button {
-        padding: 10px 20px;
+        padding: 20px;
     }
 }

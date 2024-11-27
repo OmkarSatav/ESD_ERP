@@ -4,8 +4,8 @@ INSERT INTO Departments (name, capacity)
 VALUES
     ('Academic', 500),
     ('Accounts', 50),
-    ('Support', 15),   
-    ('Administration', 5);  
+    ('Support', 15),
+    ('Administration', 5);
 
 SELECT *FROM Departments;
 
@@ -32,3 +32,28 @@ VALUES
 
 
 SELECT *FROM Employees;
+
+
+INSERT INTO Employee_Salary (employee_id, payment_date, amount, description)
+VALUES
+    -- Academic Employees
+    (1, '2024-11-01', 3500.00, 'Salary for November 2024'),
+    (2, '2024-11-01', 3500.00, 'Salary for November 2024'),
+    (3, '2024-11-01', 3000.00, 'Salary for November 2024'),
+    (4, '2024-11-01', 3500.00, 'Salary for November 2024'),
+    (5, '2024-11-01', 3000.00, 'Salary for November 2024'),
+
+    -- Accounts Employees
+    (6, '2024-11-01', 3500.00, 'Salary for November 2024'),
+    (7, '2024-11-01', 5000.00, 'Salary for November 2024'),
+
+    -- Support Employees
+    (8, '2024-11-01', 3000.00, 'Salary for November 2024'),
+    (9, '2024-11-01', 2800.00, 'Salary for November 2024'),
+
+    -- Administration Employees
+    (10, '2024-11-01', 4000.00, 'Salary for November 2024'),
+    (11, '2024-11-01', 3500.00, 'Salary for November 2024');
+
+
+select *from Employee_salary;
