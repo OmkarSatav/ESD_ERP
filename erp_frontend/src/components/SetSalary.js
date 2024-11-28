@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import axiosInstance from '../api/axiosInstance';
+import axiosInstance from '../utils/axiosInstance';
 import "../styles/setSalary.css";
 
 function SetSalary() {

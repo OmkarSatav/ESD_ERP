@@ -14,5 +14,5 @@ public class ApiUtils<T> {
     private String message;  // Message providing additional information
     private T data;          // Generic data field for response payload
     private Object errors;   // Optional field to include error details
-    private int statusCode;      // HTTP status code
+    private int statusCode;  // HTTP status code
 }

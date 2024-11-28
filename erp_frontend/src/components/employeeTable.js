@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";  // Import useNavigate hook
-import axiosInstance from "../api/axiosInstance";
+import axiosInstance from "../utils/axiosInstance";
 import "../styles/employeeTable.css";
 import SalaryModal from "./salaryModal";
 
@@ -16,6 +16,26 @@ function EmployeeTable({token}) {
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [loggedInUser, setLoggedInUser] = useState(null);
+
+
+  useEffect(() => {
+    // This effect handles listening to back button click (popstate event)
+    const handlePopState = () => {
+      // Clear the token when the back button is clicked
+      localStorage.removeItem("token");
+      alert("You have been logged out due to session expiration.");
+      navigate("/login");  // Redirect to login page
+    };
+
+    // Listen for popstate event (back button click)
+    window.addEventListener("popstate", handlePopState);
+
+    // Cleanup the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navigate]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,10 +94,17 @@ function EmployeeTable({token}) {
 
       await axiosInstance.put("/account/update-amount", payload, { requiresAuth: true });
       alert("Amount sent to selected employees successfully!");
+      setAmount("");     
+      setDescription("")
     } catch (error) {
       console.error("Error sending amount:", error);
     }
   };
+
+  
+
+  
+
 
   // Filter employees based on the selected department
   const filteredEmployees = selectedDepartment

@@ -17,7 +17,7 @@ import java.util.List;
 public class Employees implements UserDetails {
 
     @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int employee_id;
 
